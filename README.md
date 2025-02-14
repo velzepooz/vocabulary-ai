@@ -5,9 +5,9 @@ The application is designed to save the words you jot down in your notebook duri
 Now you can upload images of your handwritten notebook pages via telegram bot and the application will extract the words for you.
 
 Project roadmap:
-[ ] Upload images to the application via the web interface
-[ ] Save list of words in application account
-[ ] Allow to export list of words to the Google spreadsheet or other storage
+- [ ] Upload images to the application via the web interface
+- [ ] Save list of words in application account
+- [ ] Allow to export list of words to the Google spreadsheet or other storage
 
 ## Technologies
 
