@@ -21,6 +21,6 @@ export class GeneralExceptionFilter implements ExceptionFilter {
       `Exception occurred: ${exception.message}`,
       exception.stack,
     );
-    await this._captureError.captureException(exception);
+    await this._captureError.captureError(exception);
   }
 }

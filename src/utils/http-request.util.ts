@@ -100,6 +100,7 @@ export class HttpRequestUtil {
   ): Promise<Response> {
     try {
       const response = await fetch(url, options);
+
       return this.handleResponse<Response>(response);
     } catch (error) {
       throw new HttpRequestError(error.message);
@@ -117,10 +118,12 @@ export class HttpRequestUtil {
   ): Promise<ResponseData> {
     if (!response.ok) {
       const errorMessage = await response.text();
+
       throw new HttpRequestError(
         `Request failed with status ${response.status}: ${errorMessage}`,
       );
     }
+
     return response.json();
   }
 }

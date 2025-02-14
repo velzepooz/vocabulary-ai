@@ -26,11 +26,11 @@ export const envVarsSchema = z.object({
   ...authTokenSchema.shape,
   NODE_ENV: z.nativeEnum(nodeEnvEnum),
   ENV: z.nativeEnum(envEnum),
-  SLACK_ERROR_BOT_TOKEN: z.string(),
-  SLACK_ERROR_NOTIFICATION_CHANNEL: z.string(),
   ERROR_DESTINATION: z.nativeEnum(errorDestinationEnum),
   TELEGRAM_BOT_TOKEN: z.string(),
+  TELEGRAM_BOT_ERROR_TOKEN: z.string(),
   TELEGRAM_ERROR_NOTIFICATION_CHAT_ID: z.string(),
+  OPENAI_API_KEY: z.string(),
 });
 
 export type ENV_VARS = z.infer<typeof envVarsSchema>;

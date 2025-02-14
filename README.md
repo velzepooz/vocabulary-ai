@@ -1,13 +1,18 @@
-# NestJS application template
+# Vocabulary AI
 
-This is a starter template for NestJS applications
+The application is designed to save the words you jot down in your notebook during language lessons. It helps to organize and maintain your entire learned vocabulary by storing it in a Google spreadsheet. This approach provides quick and convenient access to the words for review, which enhances effective knowledge retention and simplifies the learning process.
 
+Now you can upload images of your handwritten notebook pages via telegram bot and the application will extract the words for you.
+
+Project roadmap:
+[ ] Upload images to the application via the web interface
+[ ] Save list of words in application account
+[ ] Allow to export list of words to the Google spreadsheet or other storage
 
 ## Technologies
 
 - [NestJS](https://nestjs.com/)
-- [Fastify](https://www.fastify.io/)
-- [Swagger](https://swagger.io/)
+- [Telegraf](https://telegraf.js.org/)
 - [Docker](https://www.docker.com/)
 - Jest
 
@@ -25,13 +30,13 @@ Follow these steps to install the application:
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/velzepooz/nestjs-template
+   git clone https://github.com/velzepooz/vocabulary-ai
    ```
 
 2. **Navigate to the Project Directory:**
 
    ```bash
-   cd nestjs-template
+   cd vocabulary-ai
    ```
 
 3. **Install Dependencies (for local development):**
@@ -44,13 +49,6 @@ Follow these steps to install the application:
 
    Configure an `.env` file in the root directory or leave default values.
 
-
-## Deploy
-
-After deploying the application, run following command:
-```bash
-docker compose --env-file .env up -d --build
-```
 
 This script will start a postgres container, apply all migrations and seeds, start the app in the background.
 

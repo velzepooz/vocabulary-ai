@@ -1,15 +1,14 @@
-import { HttpException } from '@nestjs/common';
-
 export type ApplicationErrorType = {
-  statusCode: number;
+  errorCode: number;
   message: string;
 };
 
 /**
- * Custom application error class that extends NestJS HttpException.
- * Provides a standardized way to create HTTP exceptions with status codes and messages.
+ * Custom application error class that extends Error.
+ * Provides a standardized way to create errors with status codes and messages.
  */
-export class ApplicationError extends HttpException {
+export class ApplicationError extends Error {
+  public readonly errorCode: number;
   /**
    * Creates a new ApplicationError instance.
    *
@@ -18,6 +17,7 @@ export class ApplicationError extends HttpException {
    * @param error.message Error message to be displayed
    */
   constructor(error: ApplicationErrorType) {
-    super(error.message, error.statusCode);
+    super(error.message);
+    this.errorCode = error.errorCode;
   }
 }

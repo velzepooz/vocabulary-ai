@@ -21,7 +21,6 @@ export class CaptureError {
   private readonly _destination: ErrorDestination;
   private readonly _logger = new Logger(CaptureError.name);
   private readonly _destinationMap = {
-    [errorDestinationEnum.SLACK]: (text: string) => this._sendToSlack(text),
     [errorDestinationEnum.TELEGRAM]: (text: string) =>
       this._sendToTelegram(text),
     [errorDestinationEnum.CONSOLE]: (text: string) => this._logToConsole(text),
@@ -36,7 +35,7 @@ export class CaptureError {
    * Captures an error and sends it to the configured destination
    * @param error - The error to capture and report
    */
-  async captureException(error: Error): Promise<void> {
+  async captureError(error: Error): Promise<void> {
     const text = `Error in ${process.env.ENV} environment: \n${error.stack}\n`;
 
     await this._destinationMap[this._destination](text);
@@ -51,9 +50,9 @@ export class CaptureError {
       await HttpRequestUtil.makeGetRequest(
         encodeURI(
           `https://api.telegram.org/bot${this._configService.get<
-            ENV_VARS['TELEGRAM_BOT_TOKEN']
+            ENV_VARS['TELEGRAM_BOT_ERROR_TOKEN']
           >(
-            'TELEGRAM_BOT_TOKEN',
+            'TELEGRAM_BOT_ERROR_TOKEN',
           )}/sendMessage?chat_id=${this._configService.get<
             ENV_VARS['TELEGRAM_ERROR_NOTIFICATION_CHAT_ID']
           >('TELEGRAM_ERROR_NOTIFICATION_CHAT_ID')}&text=${text}`,
@@ -61,36 +60,6 @@ export class CaptureError {
       );
     } catch (e) {
       this._logger.error(`Failed to send error to Telegram: ${e.message}`);
-    }
-  }
-
-  /**
-   * Sends error message to Slack using Web API
-   * @param text - The error message to send
-   */
-  private async _sendToSlack(text: string): Promise<void> {
-    try {
-      const response = await HttpRequestUtil.makePostRequest<{ ok: boolean }>(
-        'https://slack.com/api/chat.postMessage',
-        {
-          channel: this._configService.get<
-            ENV_VARS['SLACK_ERROR_NOTIFICATION_CHANNEL']
-          >('SLACK_ERROR_NOTIFICATION_CHANNEL'),
-          text,
-        },
-        {
-          Authorization: `Bearer ${this._configService.get<
-            ENV_VARS['SLACK_ERROR_BOT_TOKEN']
-          >('SLACK_ERROR_BOT_TOKEN')}`,
-        },
-      );
-      if (!response.ok) {
-        throw new Error(
-          `Slack API responded with status: ${JSON.stringify(response)}`,
-        );
-      }
-    } catch (e) {
-      this._logger.error(`Failed to send error to Slack: ${e.message}`);
     }
   }
 

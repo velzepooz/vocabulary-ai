@@ -29,6 +29,7 @@ async function bootstrap() {
     new FastifyAdapter({ logger: true }),
   );
   const config = app.get<ConfigService>(ConfigService);
+
   await applyAppUtils(app, appUtils);
 
   await app.listen(
@@ -36,4 +37,5 @@ async function bootstrap() {
     config.get<ENV_VARS['HOST']>('server.host'),
   );
 }
+
 bootstrap();

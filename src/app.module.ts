@@ -9,6 +9,7 @@ import JwtConfig from './config/auth-token.config';
 import { GeneralExceptionFilter } from './app/filters';
 import { GlobalModule } from './common/global.module';
 import { envVarsSchema } from './config/env-vars.config';
+import { GeneralModule } from './modules/general.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { envVarsSchema } from './config/env-vars.config';
       inject: [ConfigService],
     }),
     GlobalModule,
+    GeneralModule,
   ],
   controllers: [AppController],
   providers: [
