@@ -31,6 +31,7 @@ export const envVarsSchema = z.object({
   TELEGRAM_BOT_ERROR_TOKEN: z.string(),
   TELEGRAM_ERROR_NOTIFICATION_CHAT_ID: z.string(),
   OPENAI_API_KEY: z.string(),
+  DATABASE_URL: z.string().nonempty(),
 });
 
 export type ENV_VARS = z.infer<typeof envVarsSchema>;
