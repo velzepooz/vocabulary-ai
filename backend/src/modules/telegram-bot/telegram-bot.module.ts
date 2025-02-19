@@ -3,8 +3,11 @@ import { TelegrafModule } from 'nestjs-telegraf';
 import { Module } from '@nestjs/common';
 import { ENV_VARS } from '../../config/env-vars.config';
 import { AiModule } from '../ai/ai.module';
+import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
 import { TelegramBotController } from './telegram-bot.controller';
 import { TelegramBotService } from './services/telegram-bot.service';
+import { TelegramBotRedisRepository } from './repositories/telegram-bot-redis.repository';
 
 @Module({
   imports: [
@@ -18,8 +21,14 @@ import { TelegramBotService } from './services/telegram-bot.service';
       inject: [ConfigService],
     }),
     AiModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
-  providers: [TelegramBotController, TelegramBotService],
+  providers: [
+    TelegramBotController,
+    TelegramBotService,
+    TelegramBotRedisRepository,
+  ],
 })
 export class TelegramBotModule {}

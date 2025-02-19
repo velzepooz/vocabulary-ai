@@ -3,14 +3,14 @@ import { ConfigService } from '@nestjs/config';
 import { HttpRequestUtil } from '../utils/http-request.util';
 import { ENV_VARS } from '../config/env-vars.config';
 
-export const errorDestinationEnum = {
+export const ErrorDestinationEnum = {
   SLACK: 'SLACK',
   TELEGRAM: 'TELEGRAM',
   CONSOLE: 'CONSOLE',
 } as const;
 
 type ErrorDestination =
-  (typeof errorDestinationEnum)[keyof typeof errorDestinationEnum];
+  (typeof ErrorDestinationEnum)[keyof typeof ErrorDestinationEnum];
 
 /**
  * Service for capturing and routing error messages to different destinations
@@ -21,9 +21,9 @@ export class CaptureError {
   private readonly _destination: ErrorDestination;
   private readonly _logger = new Logger(CaptureError.name);
   private readonly _destinationMap = {
-    [errorDestinationEnum.TELEGRAM]: (text: string) =>
+    [ErrorDestinationEnum.TELEGRAM]: (text: string) =>
       this._sendToTelegram(text),
-    [errorDestinationEnum.CONSOLE]: (text: string) => this._logToConsole(text),
+    [ErrorDestinationEnum.CONSOLE]: (text: string) => this._logToConsole(text),
   };
 
   constructor(private readonly _configService: ConfigService) {

@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_FILTER } from '@nestjs/core';
-import { DrizzlePostgresModule } from '@knaadh/nestjs-drizzle-postgres';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import ServerConfig from './config/server.config';
@@ -12,11 +11,12 @@ import { GeneralExceptionFilter } from './app/filters';
 import { GlobalModule } from './common/global.module';
 import { envVarsSchema } from './config/env-vars.config';
 import { GeneralModule } from './modules/general.module';
+import RedisConfig from './config/redis.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [ServerConfig, JwtConfig, DatabaseConfig],
+      load: [ServerConfig, JwtConfig, DatabaseConfig, RedisConfig],
       isGlobal: true,
       validate: (config) => envVarsSchema.parse(config),
     }),
@@ -25,12 +25,6 @@ import { GeneralModule } from './modules/general.module';
       useFactory: (configService: ConfigService) => ({
         ...configService.get('auth-token'),
       }),
-      inject: [ConfigService],
-    }),
-    DrizzlePostgresModule.registerAsync({
-      tag: 'DB_PROD',
-      useFactory: (configService: ConfigService) =>
-        configService.get('database'),
       inject: [ConfigService],
     }),
     GlobalModule,

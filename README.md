@@ -70,3 +70,20 @@ To run tests use the following commands:
 ```bash
 npm run test
 ```
+
+## Database
+
+To generate a new migration, use the following command:
+
+```bash
+npm run db:generate <migration-name>
+```
+
+To apply all migrations, use the following command:
+
+```bash
+npm run db:migrate
+```
+
+
+
