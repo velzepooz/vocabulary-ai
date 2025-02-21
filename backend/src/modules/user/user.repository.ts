@@ -37,4 +37,22 @@ export class UserRepository extends BaseRepository<User> {
       .set({ telegramId, updatedAt: sql`NOW()` })
       .where(eq(user.id, userId));
   }
+
+  async findByOne(where: Partial<User>): Promise<User | null> {
+    const result = await this.db
+      .select()
+      .from(user)
+      .where(
+        sql.raw(
+          Object.entries(where)
+            .map(
+              ([key, value]) =>
+                `${key} = ${typeof value === 'string' ? `'${value}'` : value}`,
+            )
+            .join(' AND '),
+        ),
+      );
+
+    return result[0] as User | null;
+  }
 }

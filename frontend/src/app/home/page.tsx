@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState } from 'react';
+import Image from 'next/image';
 
 /**
  * Home Component
@@ -37,7 +37,7 @@ export default function Home() {
     // Simulate image processing delay
     setTimeout(() => {
       // TODO: Integrate with backend API for processing
-      setProcessedText("Sample processed vocabulary text from the uploaded image.");
+      setProcessedText('Sample processed vocabulary text from the uploaded image.');
       setIsProcessing(false);
     }, 2000);
   };
@@ -63,7 +63,7 @@ export default function Home() {
           {/* Drag and Drop Area */}
           <div
             className="w-full border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer transition-colors hover:border-primary"
-            onClick={() => document.getElementById("fileInput")?.click()}
+            onClick={() => document.getElementById('fileInput')?.click()}
           >
             <Image src="/window.svg" alt="Upload Icon" width={64} height={64} />
             <p className="mt-4 text-center">

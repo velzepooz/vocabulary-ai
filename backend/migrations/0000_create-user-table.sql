@@ -1,6 +1,7 @@
 CREATE TABLE "user" (
-	"id" integer PRIMARY KEY NOT NULL,
-	"userName" varchar,
+	"id" serial PRIMARY KEY NOT NULL,
+	"firstName" varchar,
+	"lastName" varchar,
 	"email" varchar NOT NULL,
 	"password" varchar,
 	"telegramId" bigint,

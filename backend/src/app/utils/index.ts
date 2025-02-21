@@ -3,7 +3,6 @@
  *
  * Exports utility functions for:
  * - Swagger API documentation setup
- * - Global exception handling and filtering
  * - Multipart form data parsing
  * - Cookie handling
  * - Security headers (Helmet)
@@ -16,7 +15,6 @@
  */
 
 export * from './swagger.util';
-export * from './exception-filter.util';
 export * from './multipart.util';
 export * from './cookie.util';
 export * from './helmet.util';

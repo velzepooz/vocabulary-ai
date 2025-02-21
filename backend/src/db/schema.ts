@@ -5,6 +5,7 @@ import {
   timestamp,
   uniqueIndex,
   bigint,
+  serial,
 } from 'drizzle-orm/pg-core';
 
 const timestamps = {
@@ -15,8 +16,9 @@ const timestamps = {
 export const user = pgTable(
   'user',
   {
-    id: integer().primaryKey(),
-    userName: varchar(),
+    id: serial().primaryKey(),
+    firstName: varchar(),
+    lastName: varchar(),
     email: varchar().notNull(),
     password: varchar(),
     telegramId: bigint({ mode: 'number' }),

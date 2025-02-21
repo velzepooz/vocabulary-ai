@@ -1,5 +1,5 @@
 {
-  "id": "c4090aea-cda8-47c5-8dff-bb1607d5e17e",
+  "id": "c1d7b1ab-bd96-465e-aaca-ca53edeaeb1c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,12 +10,18 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "userName": {
-          "name": "userName",
+        "firstName": {
+          "name": "firstName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastName": {
+          "name": "lastName",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false

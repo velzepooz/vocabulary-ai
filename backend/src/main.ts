@@ -7,20 +7,20 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import {
   addSwagger,
-  addExceptionFilter,
   addMultipart,
   addCookie,
   addHelmet,
   applyAppUtils,
+  addCorsPolicy,
 } from './app/utils';
 import { ENV_VARS } from './config/env-vars.config';
 
 const appUtils = [
   addSwagger,
-  addExceptionFilter,
   addMultipart,
   addCookie,
   addHelmet,
+  addCorsPolicy,
 ];
 
 async function bootstrap() {

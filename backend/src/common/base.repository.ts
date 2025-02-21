@@ -22,7 +22,7 @@ export abstract class BaseRepository<T> {
     return result[0] || null;
   }
 
-  async create(data: Omit<T, 'id'>): Promise<T> {
+  async create(data: Partial<T>): Promise<T> {
     const result = await this.db.insert(this.table).values(data).returning();
 
     return result[0] as T;
