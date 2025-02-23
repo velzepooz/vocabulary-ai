@@ -20,10 +20,10 @@ const formSchema = z.object({
     required_error: 'Hey there! Please enter your email to sign in',
   }).email({
     message: 'Hmm... that email format doesn\'t look right. Want to try again?'
-  }),
+  }).trim().toLowerCase(),
   password: z.string({
     required_error: 'Don\'t forget your password - we need it to let you in!',
-  }),
+  }).trim(),
 });
 
 export async function signIn(_: State, formData: FormData): Promise<State> {

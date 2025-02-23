@@ -23,17 +23,17 @@ const formSchema = z.object({
     required_error: 'Hey there! Don\'t forget to choose a name 😊',
   }).min(2, {
     message: 'Your first name should be at least 2 characters long'
-  }),
+  }).trim(),
   lastName: z.string({
     required_error: 'Hey there! Don\'t forget to choose a last name 😊',
   }).min(2, {
     message: 'Your last name should be at least 2 characters long'
-  }),
+  }).trim(),
   email: z.string({
     required_error: 'We\'ll need your email to keep in touch!',
   }).email({
     message: 'Oops! That email doesn\'t look quite right. Mind double-checking?'
-  }),
+  }).trim().toLowerCase(),
   password: z.string({
     required_error: 'Let\'s create a password to protect your account',
   }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,32}$/, {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { geistSans, geistMono } from '@/app/ui/fonts';
 import '@/app/ui/globals.css';
-import { Navbar } from '@/app/ui/Navbar';
+import { Navbar } from '@/app/ui/navbar';
 
 export const metadata: Metadata = {
   title: 'Vocabulary AI',
