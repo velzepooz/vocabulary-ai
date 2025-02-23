@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { getSessionStatus, sessionStatusEnum } from '../lib/session';
-import { publicLinks , privateLinks } from '../lib/constants/routes';
+import { publicLinks, privateLinks } from '../lib/constants/routes';
+import { signOut } from '../lib/actions/sign-out';
 
 export const Navbar = async () => {
   const sessionStatus = await getSessionStatus();
@@ -13,17 +14,30 @@ export const Navbar = async () => {
         <Link href="/" className="text-xl font-bold">
           Vocabulary AI
         </Link>
-        <div className="flex space-x-4">
-          {sessionStatus === sessionStatusEnum.AUTHENTICATED && privateLinks.map(({ href, label }) => (
-            <Link key={href} href={href} className="text-m hover:underline">
-              {label}
-            </Link>
-          ))}
-          {sessionStatus === sessionStatusEnum.GUEST && publicLinks.map(({ href, label }) => (
-            <Link key={href} href={href} className="text-m hover:underline">
-              {label}
-            </Link>
-          ))}
+        <div className="flex space-x-4 items-center">
+          {sessionStatus === sessionStatusEnum.AUTHENTICATED ? (
+            <>
+              {privateLinks.map(({ href, label }) => (
+                <Link key={href} href={href} className="text-m hover:underline">
+                  {label}
+                </Link>
+              ))}
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className="text-m hover:underline text-red-600 dark:text-red-400"
+                >
+                  Sign Out
+                </button>
+              </form>
+            </>
+          ) : (
+            publicLinks.map(({ href, label }) => (
+              <Link key={href} href={href} className="text-m hover:underline">
+                {label}
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </nav>

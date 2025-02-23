@@ -12,9 +12,8 @@ export async function verify(
     const { payload } = await jwtVerify<User>(token, encodedKey);
 
     return payload;
-  } catch (error: unknown) {
-    console.error('Failed to verify session', error);
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_: unknown) {
     return null;
   }
 }
