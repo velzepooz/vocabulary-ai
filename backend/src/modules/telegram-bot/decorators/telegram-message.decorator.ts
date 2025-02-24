@@ -17,8 +17,10 @@ export function TelegramMessage() {
 
         await originalMethod.apply(this, args);
 
-        logger.log(`Message ${ctx.message.message_id} processed successfully`);
-      } catch (error) {
+        logger.log(
+          `Message ${ctx?.message?.message_id} processed successfully`,
+        );
+      } catch (error: any) {
         logger.error(`Error in ${propertyKey}: ${error}`);
 
         if (ctx) {

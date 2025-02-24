@@ -33,8 +33,8 @@ async function bootstrap() {
   await applyAppUtils(app, appUtils);
 
   await app.listen(
-    config.get<ENV_VARS['PORT']>('server.port'),
-    config.get<ENV_VARS['HOST']>('server.host'),
+    config.get<ENV_VARS['PORT']>('server.port') ?? 3000,
+    config.get<ENV_VARS['HOST']>('server.host') ?? '0.0.0.0',
   );
 }
 

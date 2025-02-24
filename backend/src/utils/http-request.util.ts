@@ -34,7 +34,7 @@ export class HttpRequestUtil {
   ): Promise<Response> {
     return this.makeRequest<Response>(url, {
       method: 'GET',
-      headers,
+      headers: headers ?? {},
     });
   }
 
@@ -102,8 +102,12 @@ export class HttpRequestUtil {
       const response = await fetch(url, options);
 
       return this.handleResponse<Response>(response);
-    } catch (error) {
-      throw new HttpRequestError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new HttpRequestError(error.message);
+      }
+
+      throw new HttpRequestError(`Unknown error: ${JSON.stringify(error)}`);
     }
   }
 

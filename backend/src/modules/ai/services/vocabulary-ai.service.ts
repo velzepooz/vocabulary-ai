@@ -9,8 +9,8 @@ import { PARSE_WORDS_ERRORS } from '../constants/parse-words-errors.constant';
 import { CaptureError } from '../../../common/capture-error';
 
 @Injectable()
-export class ParseWordsService {
-  private readonly _logger = new Logger(ParseWordsService.name);
+export class VocabularyAiService {
+  private readonly _logger = new Logger(VocabularyAiService.name);
   private readonly _model = openai('gpt-4o-mini');
 
   constructor(private readonly _captureErrors: CaptureError) {}
@@ -36,7 +36,7 @@ export class ParseWordsService {
       });
 
       return response.object;
-    } catch (e) {
+    } catch (e: any) {
       this._logger.error(e.data);
       this._captureErrors.captureError(e);
 

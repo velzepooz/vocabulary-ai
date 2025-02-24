@@ -13,7 +13,7 @@ const serializeHash = (hash: Buffer, salt: Buffer) => {
 };
 
 const parseHashOptions = (options: string): Record<string, number> => {
-  const values = [];
+  const values: [string, number][] = [];
   const items = options.split(',');
   for (const item of items) {
     const [key, val] = item.split('=');
@@ -62,7 +62,7 @@ export const validatePassword = (
   const { params, salt, hash } = deserializeHash(serHash);
 
   return new Promise((resolve, reject) => {
-    const callback = (err: Error, hashedPassword: Buffer) => {
+    const callback = (err: Error | null, hashedPassword: Buffer) => {
       if (err) {
         reject(err);
 

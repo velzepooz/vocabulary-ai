@@ -28,6 +28,12 @@ export abstract class BaseRepository<T> {
     return result[0] as T;
   }
 
+  async bulkCreate(data: Partial<T>[]): Promise<T[]> {
+    const result = await this.db.insert(this.table).values(data).returning();
+
+    return result as T[];
+  }
+
   async update(id: number | string, data: Partial<T>): Promise<T | null> {
     const result = await this.db
       .update(this.table)

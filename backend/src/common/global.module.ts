@@ -1,7 +1,10 @@
 import { Global, Module } from '@nestjs/common';
-import { DrizzlePostgresModule } from '@knaadh/nestjs-drizzle-postgres';
+import {
+  DrizzlePostgresConfig,
+  DrizzlePostgresModule,
+} from '@knaadh/nestjs-drizzle-postgres';
 import { ConfigService } from '@nestjs/config';
-import { RedisModule } from '@liaoliaots/nestjs-redis';
+import { RedisModule, RedisModuleOptions } from '@liaoliaots/nestjs-redis';
 import { CaptureError } from './capture-error';
 
 @Global()
@@ -9,11 +12,12 @@ import { CaptureError } from './capture-error';
   imports: [
     DrizzlePostgresModule.registerAsync({
       useFactory: (configService: ConfigService) =>
-        configService.get('database'),
+        configService.get('database') as DrizzlePostgresConfig,
       inject: [ConfigService],
     }),
     RedisModule.forRootAsync({
-      useFactory: (configService: ConfigService) => configService.get('redis'),
+      useFactory: (configService: ConfigService) =>
+        configService.get('redis') as RedisModuleOptions,
       inject: [ConfigService],
     }),
   ],

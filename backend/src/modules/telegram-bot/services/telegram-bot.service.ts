@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Context } from 'telegraf';
 import { ENV_VARS } from '../../../config/env-vars.config';
-import { ParseWordsService } from '../../ai/services/parse-words.service';
 import { ApplicationError } from '../../../common/application-error';
 import { PARSE_WORDS_ERRORS } from '../../ai/constants/parse-words-errors.constant';
 import {
@@ -13,35 +12,49 @@ import {
   INVALID_EMAIL_MESSAGE,
   USER_NOT_FOUND_MESSAGE,
   USER_UNAUTHORIZED_MESSAGE,
+  ERROR_MESSAGE,
 } from '../constants/telegram-message-templates.constant';
 import { AuthService } from '../../auth/auth.service';
 import { TelegramBotRedisRepository } from '../repositories/telegram-bot-redis.repository';
 import { isValidEmail } from '../../../utils/email-validation.util';
+import { VocabularyService } from '../../vocabulary/vocabulary.service';
 
 @Injectable()
 export class TelegramBotService {
   constructor(
     private readonly _configService: ConfigService,
-    private readonly _parseWordsService: ParseWordsService,
     private readonly _authService: AuthService,
     private readonly _telegramBotRedisRepository: TelegramBotRedisRepository,
+    private readonly _vocabularyService: VocabularyService,
   ) {}
 
   async handleStartCommand(ctx: Context): Promise<void> {
     await ctx.reply(START_MESSAGE);
-    const telegramId = ctx.from.id;
+    const telegramId = ctx.from?.id;
+    if (!telegramId) {
+      await ctx.reply(ERROR_MESSAGE);
+
+      return;
+    }
+
     const user = await this._authService.authenticateTelegramUser(telegramId);
 
     if (!user) {
       await this._telegramBotRedisRepository.addEmailVerificationAwaitingUser(
-        ctx.from.id,
+        telegramId,
       );
       await ctx.reply(TELEGRAM_ID_NOT_FOUND_MESSAGE);
     }
   }
 
   async handleMessage(ctx: Context): Promise<void> {
-    const telegramId = ctx.from.id;
+    const telegramId = ctx.from?.id;
+
+    if (!telegramId) {
+      await ctx.reply(ERROR_MESSAGE);
+
+      return;
+    }
 
     if (await this._handleEmailVerification(ctx, telegramId)) {
       return;
@@ -58,13 +71,12 @@ export class TelegramBotService {
 
     // Existing message handling logic
     const messageHandlers = {
-      photo: async () => this._handlePhoto(ctx),
+      photo: async () => this._handlePhoto(ctx, user.id),
       document: () => ctx.reply(INVALID_MESSAGE_TYPE_MESSAGE_FOR_PHOTO),
       text: () => ctx.reply(INVALID_MESSAGE_TYPE_MESSAGE_FOR_PHOTO),
     };
-
     const messageType = Object.keys(messageHandlers).find(
-      (type) => type in ctx.message,
+      (type) => ctx.message && type in ctx.message,
     );
 
     if (messageType) {
@@ -84,9 +96,8 @@ export class TelegramBotService {
       await this._telegramBotRedisRepository.isEmailVerificationAwaitingUser(
         telegramId,
       );
-
     if (isEmailVerificationAwaitingUser) {
-      if ('text' in ctx.message) {
+      if (ctx.message && 'text' in ctx.message) {
         const email = ctx.message.text;
 
         if (!isValidEmail(email)) {
@@ -122,11 +133,11 @@ export class TelegramBotService {
     return false;
   }
 
-  async _handlePhoto(ctx: Context) {
+  async _handlePhoto(ctx: Context, userId: number) {
     await ctx.reply('Processing photo.... Please wait.');
     const photoUrl = await this._getPhotoUrl(ctx);
     const extractedWords =
-      await this._parseWordsService.parseWordsFromPhoto(photoUrl);
+      await this._vocabularyService.parseVocabularyFromPhoto(photoUrl, userId);
 
     console.log(extractedWords);
 

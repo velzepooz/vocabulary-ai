@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ParseWordsService } from './services/parse-words.service';
+import { VocabularyAiService } from './services/vocabulary-ai.service';
 
 @Module({
-  providers: [ParseWordsService],
-  exports: [ParseWordsService],
+  providers: [VocabularyAiService],
+  exports: [VocabularyAiService],
 })
 export class AiModule {}

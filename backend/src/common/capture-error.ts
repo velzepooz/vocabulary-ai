@@ -28,7 +28,8 @@ export class CaptureError {
 
   constructor(private readonly _configService: ConfigService) {
     this._destination =
-      _configService.get<ENV_VARS['ERROR_DESTINATION']>('ERROR_DESTINATION');
+      _configService.get<ENV_VARS['ERROR_DESTINATION']>('ERROR_DESTINATION') ??
+      ErrorDestinationEnum.CONSOLE;
   }
 
   /**

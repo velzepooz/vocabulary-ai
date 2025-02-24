@@ -33,7 +33,6 @@ export class UserRepository extends BaseRepository<User> {
   async updateTelegramId(userId: number, telegramId: number): Promise<void> {
     await this.db
       .update(user)
-      // @ts-expect-error
       .set({ telegramId, updatedAt: sql`NOW()` })
       .where(eq(user.id, userId));
   }

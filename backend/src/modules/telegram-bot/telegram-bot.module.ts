@@ -5,6 +5,7 @@ import { ENV_VARS } from '../../config/env-vars.config';
 import { AiModule } from '../ai/ai.module';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
+import { VocabularyModule } from '../vocabulary/vocabulary.module';
 import { TelegramBotController } from './telegram-bot.controller';
 import { TelegramBotService } from './services/telegram-bot.service';
 import { TelegramBotRedisRepository } from './repositories/telegram-bot-redis.repository';
@@ -16,13 +17,14 @@ import { TelegramBotRedisRepository } from './repositories/telegram-bot-redis.re
         token:
           configService.get<ENV_VARS['TELEGRAM_BOT_TOKEN']>(
             'TELEGRAM_BOT_TOKEN',
-          ),
+          ) ?? '',
       }),
       inject: [ConfigService],
     }),
     AiModule,
     AuthModule,
     UserModule,
+    VocabularyModule,
   ],
   controllers: [],
   providers: [

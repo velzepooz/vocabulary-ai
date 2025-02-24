@@ -5,7 +5,7 @@ export abstract class BaseRedisRepository {
 
   async get<Data>(key: string): Promise<Data | null> {
     return JSON.parse(
-      await this._redisClient.get(key),
+      (await this._redisClient.get(key)) ?? '{}',
     ) as unknown as Promise<Data | null>;
   }
 
