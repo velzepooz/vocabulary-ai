@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { getSessionStatus, sessionStatusEnum } from '../lib/session';
 import { publicLinks, privateLinks } from '../lib/constants/routes';
-import { signOut } from '../lib/actions/sign-out';
+import { signOut } from '../lib/actions/auth/sign-out';
 
 export const Navbar = async () => {
   const sessionStatus = await getSessionStatus();

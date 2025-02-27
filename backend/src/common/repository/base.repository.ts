@@ -1,5 +1,5 @@
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
-import { eq } from 'drizzle-orm';
+import { and, eq, SQL } from 'drizzle-orm';
 import { PgTableWithColumns } from 'drizzle-orm/pg-core';
 
 export abstract class BaseRepository<T> {
@@ -8,8 +8,18 @@ export abstract class BaseRepository<T> {
     protected readonly table: PgTableWithColumns<any>,
   ) {}
 
-  async findAll(): Promise<T[]> {
-    return await this.db.select().from(this.table).execute();
+  async findAll(where: Partial<T> = {}): Promise<T[]> {
+    const query = this.db.select().from(this.table);
+
+    if (Object.keys(where).length > 0) {
+      const conditions = Object.entries(where).map(([key, value]) =>
+        eq(this.table[key], value),
+      );
+
+      query.where(and(...conditions));
+    }
+
+    return query.execute();
   }
 
   async findById(id: number | string): Promise<T | null> {

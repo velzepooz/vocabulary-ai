@@ -1,4 +1,4 @@
-import { FeatureItem } from '@/types';
+import { FeatureItem } from '@/app/lib/types/index-page.types';
 
 const features: FeatureItem[] = [
   {

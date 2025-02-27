@@ -6,6 +6,10 @@ import { createWord, Word } from './type/word-repository.type';
 export class WordService {
   constructor(private readonly wordRepository: WordRepository) {}
 
+  async getWords(userId: number): Promise<Word[]> {
+    return this.wordRepository.findAll({ userId });
+  }
+
   async bulkCreate(words: createWord[]): Promise<Word[]> {
     if (words.length === 0) {
       return [];

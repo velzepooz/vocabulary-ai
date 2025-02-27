@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RedisService } from '@liaoliaots/nestjs-redis';
-import { BaseRedisRepository } from '../../../common/base-redis.repository';
+import { BaseRedisRepository } from '../../../common/repository/base-redis.repository';
 import { TELEGRAM_BOT_REDIS_CLIENT } from '../constants/redis.constant';
 
 @Injectable()

@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
-import { signUp, State } from '@/app/lib/actions/sign-up';
+import { signUp, State } from '@/app/lib/actions/auth/sign-up';
 
 export function SignUpForm() {
   const initialState: State = {
@@ -148,5 +148,5 @@ export function SignUpForm() {
         Sign Up
       </button>
     </form>
-  )
+  );
 }

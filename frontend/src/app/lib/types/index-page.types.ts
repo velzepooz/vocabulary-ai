@@ -3,7 +3,7 @@ export interface FeatureItem {
   title: string;
   description: string;
 }
-
+  
 export interface Step {
   title: string;
   description: string;

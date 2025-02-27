@@ -1,4 +1,4 @@
-import { BaseRepository } from 'src/common/base.repository';
+import { BaseRepository } from 'src/common/repository/base.repository';
 import { Injectable } from '@nestjs/common';
 import { InjectDrizzle } from '@knaadh/nestjs-drizzle-postgres';
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js';

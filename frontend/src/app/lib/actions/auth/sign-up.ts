@@ -2,11 +2,11 @@
 
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
-import { sendSignUpRequest } from '../api/auth';
-import { signUpUserType } from '../types/auth.types';
-import { HttpRequestError } from '../utils/http-request';
-import { authenticate } from '../session';
-import { FormState } from '../types/form-state.type';
+import { sendSignUpRequest } from '../../api/auth';
+import { signUpUserType } from '../../types/auth.types';
+import { HttpRequestError } from '../../utils/http-request';
+import { authenticate } from '../../session';
+import { FormState } from '../../types/form-state.type';
 
 export type FormFields = {
   firstName: string;

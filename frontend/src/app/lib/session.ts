@@ -51,3 +51,9 @@ export async function getSessionStatus(): Promise<SessionStatus> {
 
   return cookieStore.get(SESSION_STATUS_COOKIE_NAME)?.value as SessionStatus || sessionStatusEnum.GUEST;
 };
+
+export async function getSessionToken(): Promise<string> {
+  const cookieStore = await cookies();
+
+  return cookieStore.get(SESSION_COOKIE_NAME)?.value as string;
+}

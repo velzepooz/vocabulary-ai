@@ -1,4 +1,4 @@
-import { Step } from '@/types';
+import { Step } from '@/app/lib/types/index-page.types';
 
 const steps: Step[] = [
   {

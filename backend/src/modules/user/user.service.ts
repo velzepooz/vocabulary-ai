@@ -6,11 +6,11 @@ import { createUserType, User } from './type/user-repository.type';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async findByTelegramId(telegramId: number): Promise<User | null> {
+  async getByTelegramId(telegramId: number): Promise<User | null> {
     return this.userRepository.findByTelegramId(telegramId);
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async getByEmail(email: string): Promise<User | null> {
     return this.userRepository.findByEmail(email);
   }
 
@@ -20,6 +20,10 @@ export class UserService {
 
   async getOne(where: Partial<User>): Promise<User | null> {
     return this.userRepository.findByOne(where);
+  }
+
+  async getById(id: number): Promise<User | null> {
+    return this.userRepository.findById(id);
   }
 
   async create(data: createUserType): Promise<User> {

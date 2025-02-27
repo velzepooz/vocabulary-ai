@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
-import { signIn, State } from '../../lib/actions/sign-in';
+import { signIn, State } from '../../lib/actions/auth/sign-in';
 
 export default function SignInForm() {
   const initialState: State = {

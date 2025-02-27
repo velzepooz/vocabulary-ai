@@ -5,4 +5,5 @@ export const publicLinks = [
   
 export const privateLinks = [
   { href: '/home', label: 'Home' },
+  { href: '/vocabulary', label: 'My Vocabulary' },
 ];

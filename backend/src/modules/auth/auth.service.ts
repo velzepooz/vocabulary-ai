@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   async authenticateTelegramUser(telegramId: number): Promise<User | null> {
-    const user = await this.userService.findByTelegramId(telegramId);
+    const user = await this.userService.getByTelegramId(telegramId);
 
     return user;
   }
@@ -25,7 +25,7 @@ export class AuthService {
     email: string,
     telegramId: number,
   ): Promise<User | null> {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.userService.getByEmail(email);
     if (!user) {
       return null;
     }
